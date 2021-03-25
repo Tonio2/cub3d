@@ -6,7 +6,7 @@
 /*   By: alabalet <alabalet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 14:27:13 by alabalet          #+#    #+#             */
-/*   Updated: 2021/03/25 14:47:58 by alabalet         ###   ########.fr       */
+/*   Updated: 2021/03/25 15:09:37 by alabalet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,11 @@
 # define CONSTANT_H
 
 # include <stdio.h>
+# include <stdlib.h>
+# include <unistd.h>
+# include <sys/types.h>
+# include <sys/stat.h>
+# include <fcntl.h>
 
 typedef struct s_color
 {
@@ -34,6 +39,12 @@ typedef struct s_cub
 	t_color	C;
 	char	**map;
 }			t_cub;
+
+int		ft_len(char *str);
+void	ft_strcpy(char *dst, char *src);
+void	ft_strcat(char **dst, char *src);
+int		ft_parse_buf(char **dst, char *src);
+int		get_next_line(int fd, char **line);
 
 void	parse_config(char *filename, t_cub *config);
 #endif
