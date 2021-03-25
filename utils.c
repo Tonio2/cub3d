@@ -6,7 +6,7 @@
 /*   By: alabalet <alabalet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 17:59:13 by alabalet          #+#    #+#             */
-/*   Updated: 2021/03/25 18:01:14 by alabalet         ###   ########.fr       */
+/*   Updated: 2021/03/25 18:03:29 by alabalet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,4 +26,18 @@ char	*ft_strcreate(char *str)
 	}
 	ret[cpt] = '\0';
 	return (ret);
+}
+
+int	ft_in(char c, char *str)
+{
+	int	cpt;
+
+	cpt = 0;
+	while (str[cpt])
+	{
+		if (str[cpt] == c)
+			return (1);
+		cpt++;
+	}
+	return (0);
 }
