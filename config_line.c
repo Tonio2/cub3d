@@ -6,7 +6,7 @@
 /*   By: alabalet <alabalet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 17:31:14 by alabalet          #+#    #+#             */
-/*   Updated: 2021/03/25 18:22:27 by alabalet         ###   ########.fr       */
+/*   Updated: 2021/03/25 18:33:46 by alabalet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ void	ft_parse_dim(char *str, t_cub *config)
 
 int	check_texture_path(char *str)
 {
+	str++;
 	return (1);
 }
 
@@ -54,9 +55,9 @@ void	ft_parse_texture(char *str, t_cub *config, int mode)
 		cpt++;
 	if (str[cpt] == '.' && str[cpt + 1] == '/')
 	{
-		if (!check_texture_path(*(str + cpt)))
+		if (!check_texture_path(str + cpt))
 			ft_print_error("Nom de fichier de texture incorrect");
-		config->textures_path[mode] = ft_strcreate(*(str + cpt));
+		config->textures_path[mode] = ft_strcreate(str + cpt);
 	}
 	config->config_ready[mode + 1] = 1;
 }
@@ -76,7 +77,10 @@ void	ft_parse_color(char *str, t_cub *config, char mode)
 		{
 			if (!ft_in(str[cpt], "0123456789"))
 				ft_print_error("Format de couleur incorrect");
-			config->F[color] = config->F[color] * 10 + str[cpt] - '0';
+			if (mode == 'F')
+				config->F[color] = config->F[color] * 10 + str[cpt] - '0';
+			if (mode == 'C')
+				config->C[color] = config->C[color] * 10 + str[cpt] - '0';
 		}
 		color++;
 	}

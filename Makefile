@@ -1,6 +1,12 @@
 NAME	=	cub3d
 
-SRCS	=	main.c
+SRCS	=	main.c \
+			config.c \
+			config_line.c \
+			map_line.c \
+			error.c \
+			get_next_line.c \
+			utils.c \
 
 OBJS	=	$(SRCS:.c=.o)
 
