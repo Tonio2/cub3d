@@ -6,7 +6,7 @@
 /*   By: alabalet <alabalet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/24 15:34:23 by alabalet          #+#    #+#             */
-/*   Updated: 2021/03/26 11:20:30 by alabalet         ###   ########.fr       */
+/*   Updated: 2021/03/26 12:09:10 by alabalet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	main(int ac, char **av)
 		printf("Usage : ./cub3d config_file_path");
 		return (1);
 	}
-	parse_config(av[1], &config);
+	ft_parse_config_file(av[1], &config);
 	ft_print_cub(config);
 	/*mlx = mlx_init();
 	mlx_win = mlx_new_window(mlx, 1920, 1080, "Hello world!");

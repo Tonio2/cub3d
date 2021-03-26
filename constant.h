@@ -6,7 +6,7 @@
 /*   By: alabalet <alabalet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 14:27:13 by alabalet          #+#    #+#             */
-/*   Updated: 2021/03/26 11:22:15 by alabalet         ###   ########.fr       */
+/*   Updated: 2021/03/26 13:24:27 by alabalet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ typedef struct s_cub
 	int		bg[2][3];
 	int		config_ready[8];
 	char	**map;
+	char	pos_init;
 }			t_cub;
 
 char	*ft_strcreate(char *str);
@@ -49,9 +50,10 @@ void	ft_parse_texture(char *str, t_cub *config, int mode);
 void	ft_parse_color(char *str, t_cub *config, int mode);
 void	ft_parse_config_line(char *str, t_cub *config);
 
-void	ft_parse_map_line(char *str, t_cub *config);
+void	ft_parse_map_lines(char **lines, t_cub *config);
+char	**ft_parse_map(int fd);
 
-void	config_init(t_cub *config);
+void	ft_config_init(t_cub *config);
 int		is_config_ready(t_cub *config);
-void	parse_config(char *filename, t_cub *config);
+void	ft_parse_config_file(char *filename, t_cub *config);
 #endif
