@@ -6,7 +6,7 @@
 /*   By: alabalet <alabalet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 17:31:14 by alabalet          #+#    #+#             */
-/*   Updated: 2021/03/25 18:33:46 by alabalet         ###   ########.fr       */
+/*   Updated: 2021/03/26 11:22:02 by alabalet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	ft_parse_dim(char *str, t_cub *config)
 	}
 	while (str[cpt] == ' ')
 		cpt++;
-	while (str[cpt] != ' ')
+	while (str[cpt])
 	{
 		if (ft_in(str[cpt], "0123456789"))
 			config->dim_y = config->dim_y * 10 + str[cpt] - '0';
@@ -59,10 +59,12 @@ void	ft_parse_texture(char *str, t_cub *config, int mode)
 			ft_print_error("Nom de fichier de texture incorrect");
 		config->textures_path[mode] = ft_strcreate(str + cpt);
 	}
+	else
+		ft_print_error("texture filename format incorrect");
 	config->config_ready[mode + 1] = 1;
 }
 
-void	ft_parse_color(char *str, t_cub *config, char mode)
+void	ft_parse_color(char *str, t_cub *config, int m)
 {
 	int	cpt;
 	int	color;
@@ -73,17 +75,20 @@ void	ft_parse_color(char *str, t_cub *config, char mode)
 	{
 		while (str[cpt] == ' ')
 			cpt++;
-		while (str[cpt] != ',')
+		if (!ft_in(str[cpt], "0123456789"))
+			ft_print_error("Format de couleur incorrect");
+		while (str[cpt] && !ft_in(str[cpt], " ,"))
 		{
 			if (!ft_in(str[cpt], "0123456789"))
 				ft_print_error("Format de couleur incorrect");
-			if (mode == 'F')
-				config->F[color] = config->F[color] * 10 + str[cpt] - '0';
-			if (mode == 'C')
-				config->C[color] = config->C[color] * 10 + str[cpt] - '0';
+			config->bg[m][color] = config->bg[m][color] * 10 + str[cpt] - '0';
+			cpt++;
 		}
+		while (str[cpt] && ft_in(str[cpt], " ,"))
+			cpt++;
 		color++;
 	}
+	config->config_ready[6 + m] = 1;
 }
 
 void	ft_parse_config_line(char *str, t_cub *config)
@@ -101,9 +106,9 @@ void	ft_parse_config_line(char *str, t_cub *config)
 	else if (str[0] == 'S')
 		ft_parse_texture(str, config, 4);
 	else if (str[0] == 'F')
-		ft_parse_color(str, config, 'F');
+		ft_parse_color(str, config, 0);
 	else if (str[0] == 'C')
-		ft_parse_color(str, config, 'C');
+		ft_parse_color(str, config, 1);
 	else
 		ft_print_error("Format incorrect");
 }
