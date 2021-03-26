@@ -6,7 +6,7 @@
 /*   By: alabalet <alabalet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 14:35:32 by alabalet          #+#    #+#             */
-/*   Updated: 2021/03/25 18:20:47 by alabalet         ###   ########.fr       */
+/*   Updated: 2021/03/26 10:14:27 by alabalet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ void	parse_config(char *filename, t_cub *config)
 	char	*line;
 
 	fd = open(filename, O_RDONLY);
+	if (fd == -1)
+		ft_print_error(strerror(errno));
 	config_init(config);
 	while (!is_config_ready(config))
 	{
@@ -55,6 +57,8 @@ void	parse_config(char *filename, t_cub *config)
 		if (ft_len(line))
 			ft_parse_config_line(line, config);
 	}
+	gnl_ret = 0;
+	/*
 	if (get_next_line(fd, &line) <= 0)
 		ft_print_error("Erreur lors de la lecture du fichier");
 	while (!ft_len(line))
@@ -69,5 +73,5 @@ void	parse_config(char *filename, t_cub *config)
 		gnl_ret = get_next_line(fd, &line);
 		if (gnl_ret == -1)
 			ft_print_error("Erreur lors de la lecture du fichier");
-	}
+	}*/
 }
