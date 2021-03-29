@@ -6,7 +6,7 @@
 /*   By: alabalet <alabalet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 14:35:32 by alabalet          #+#    #+#             */
-/*   Updated: 2021/03/29 16:49:49 by alabalet         ###   ########.fr       */
+/*   Updated: 2021/03/29 17:43:09 by alabalet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,8 @@ void	ft_parse_config_file(char *filename, t_cub *config)
 	int			fd;
 	t_map_line	*map_lines;
 
+	if (ft_strncmp(&filename[ft_len(filename) - 4], ".cub", 4))
+		ft_print_error("config filename not ending in .cub");
 	fd = open(filename, O_RDONLY);
 	if (fd == -1)
 		ft_print_error(strerror(errno));

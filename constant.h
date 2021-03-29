@@ -6,7 +6,7 @@
 /*   By: alabalet <alabalet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 14:27:13 by alabalet          #+#    #+#             */
-/*   Updated: 2021/03/29 16:50:21 by alabalet         ###   ########.fr       */
+/*   Updated: 2021/03/29 17:40:44 by alabalet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ typedef struct s_map_line
 }						t_map_line;
 
 char		*ft_strcreate(char *str);
+int			ft_strncmp(const char *s1, const char *s2, unsigned int n);
 int			ft_in(char c, char *str);
 
 int			ft_len(char *str);
