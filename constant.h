@@ -6,7 +6,7 @@
 /*   By: alabalet <alabalet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 14:27:13 by alabalet          #+#    #+#             */
-/*   Updated: 2021/03/29 17:40:44 by alabalet         ###   ########.fr       */
+/*   Updated: 2021/03/29 17:56:19 by alabalet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,14 @@ typedef struct s_map_line
 	char				*line;
 	struct s_map_line	*next;
 }						t_map_line;
+
+typedef struct s_data {
+	void	*img;
+	char	*addr;
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;
+}			t_data;
 
 char		*ft_strcreate(char *str);
 int			ft_strncmp(const char *s1, const char *s2, unsigned int n);
