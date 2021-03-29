@@ -6,7 +6,7 @@
 /*   By: alabalet <alabalet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 14:35:32 by alabalet          #+#    #+#             */
-/*   Updated: 2021/03/26 15:04:50 by alabalet         ###   ########.fr       */
+/*   Updated: 2021/03/29 16:31:33 by alabalet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,13 @@ t_map_line	*ft_parse_map(int fd)
 		last_elt = cur_elt;
 		gnl_ret = get_next_line(fd, &line);
 	}
+	if (gnl_ret == 0)
+	{
+		cur_elt = malloc(sizeof(t_map_line));
+		last_elt->next = cur_elt;
+		cur_elt->line = ft_strcreate(line);
+		cur_elt->next = 0;
+	}
 	while (gnl_ret)
 	{
 		gnl_ret = get_next_line(fd, &line);
@@ -90,15 +97,6 @@ t_map_line	*ft_parse_map(int fd)
 			ft_print_error("Non empty line after map");
 	}
 	return (first_elt);
-}
-
-void	ft_print_map_lines(t_map_line *first_elt)
-{
-	while (first_elt)
-	{
-		printf("%s\n", first_elt->line);
-		first_elt = first_elt->next;
-	}
 }
 
 void	ft_parse_config_file(char *filename, t_cub *config)
@@ -112,6 +110,5 @@ void	ft_parse_config_file(char *filename, t_cub *config)
 	ft_config_init(config);
 	ft_parse_config(fd, config);
 	map_lines = ft_parse_map(fd);
-	ft_print_map_lines(map_lines);
-	//ft_parse_map_lines(map_lines, config);
+	ft_parse_map_lines(map_lines, config);
 }

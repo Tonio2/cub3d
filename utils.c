@@ -6,7 +6,7 @@
 /*   By: alabalet <alabalet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 17:59:13 by alabalet          #+#    #+#             */
-/*   Updated: 2021/03/25 18:03:29 by alabalet         ###   ########.fr       */
+/*   Updated: 2021/03/29 16:31:32 by alabalet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,4 +40,13 @@ int	ft_in(char c, char *str)
 		cpt++;
 	}
 	return (0);
+}
+
+void	ft_print_map_lines(t_map_line *first_elt)
+{
+	while (first_elt)
+	{
+		printf("%s\n", first_elt->line);
+		first_elt = first_elt->next;
+	}
 }
