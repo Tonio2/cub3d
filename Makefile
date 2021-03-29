@@ -18,10 +18,10 @@ CC		=	gcc
 all : $(NAME)
 
 $(NAME) : $(OBJS)
-	$(CC) $(OBJS) -Lmlx -lmlx -framework OpenGL -framework AppKit -o $(NAME)
+	$(CC) $(FLAGS) $(OBJS) -lmlx -framework OpenGL -framework AppKit -o $(NAME)
 
 %.o: %.c
-	$(CC) $(FLAGS) -Imlx -c $< -o $@
+	$(CC) $(FLAGS) -c $< -o $@
 
 clean :
 	rm -f $(OBJS)

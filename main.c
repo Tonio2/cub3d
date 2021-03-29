@@ -6,7 +6,7 @@
 /*   By: alabalet <alabalet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/24 15:34:23 by alabalet          #+#    #+#             */
-/*   Updated: 2021/03/29 15:33:40 by alabalet         ###   ########.fr       */
+/*   Updated: 2021/03/29 16:54:44 by alabalet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	ft_print_cub(t_cub c)
 	while (++row < c.height)
 	{
 		column = -1;
-		while(++column < c.width)
+		while (++column < c.width)
 			printf("%c", c.map[row][column]);
 		printf("\n");
 	}
@@ -40,8 +40,8 @@ void	ft_print_cub(t_cub c)
 
 int	main(int ac, char **av)
 {
-	/*void	*mlx;
-	void	*mlx_win;*/
+	void	*mlx;
+	void	*mlx_win;
 	t_cub	config;
 
 	if (ac != 2)
@@ -51,8 +51,8 @@ int	main(int ac, char **av)
 	}
 	ft_parse_config_file(av[1], &config);
 	ft_print_cub(config);
-	/*mlx = mlx_init();
+	mlx = mlx_init();
 	mlx_win = mlx_new_window(mlx, 1920, 1080, "Hello world!");
-	mlx_loop(mlx);*/
+	mlx_loop(mlx);
 	return (0);
 }
