@@ -6,7 +6,7 @@
 /*   By: alabalet <alabalet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 14:27:13 by alabalet          #+#    #+#             */
-/*   Updated: 2021/03/29 14:54:04 by alabalet         ###   ########.fr       */
+/*   Updated: 2021/03/29 16:50:21 by alabalet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,10 @@ void		ft_parse_config_line(char *str, t_cub *config);
 
 void		ft_parse_map_lines(t_map_line *lines, t_cub *config);
 t_map_line	*ft_parse_map(int fd);
+
+void		ft_check_config(t_cub *c);
+void		ft_check_color(int *bg);
+void		ft_check_map(t_cub *c);
 
 void		ft_config_init(t_cub *config);
 int			is_config_ready(t_cub *config);

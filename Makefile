@@ -7,6 +7,7 @@ SRCS	=	main.c \
 			error.c \
 			get_next_line.c \
 			utils.c \
+			check_config.c
 
 OBJS	=	$(SRCS:.c=.o)
 

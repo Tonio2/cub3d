@@ -6,7 +6,7 @@
 /*   By: alabalet <alabalet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 14:35:32 by alabalet          #+#    #+#             */
-/*   Updated: 2021/03/29 16:31:33 by alabalet         ###   ########.fr       */
+/*   Updated: 2021/03/29 16:49:49 by alabalet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,4 +111,5 @@ void	ft_parse_config_file(char *filename, t_cub *config)
 	ft_parse_config(fd, config);
 	map_lines = ft_parse_map(fd);
 	ft_parse_map_lines(map_lines, config);
+	ft_check_config(config);
 }
