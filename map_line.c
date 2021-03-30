@@ -6,7 +6,7 @@
 /*   By: alabalet <alabalet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 18:29:58 by alabalet          #+#    #+#             */
-/*   Updated: 2021/03/29 15:32:34 by alabalet         ###   ########.fr       */
+/*   Updated: 2021/03/30 10:33:36 by alabalet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void	ft_convert_map_char(char c, t_cub *config, int row, int column)
 	else if (ft_in(c, "WNES"))
 	{
 		config->map[row][column] = ' ';
+		config->orientation_init = c;
 		if (orientation_received)
 			ft_print_error("Two initial orientation given");
 		orientation_received = 1;
