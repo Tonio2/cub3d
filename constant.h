@@ -6,7 +6,7 @@
 /*   By: alabalet <alabalet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 14:27:13 by alabalet          #+#    #+#             */
-/*   Updated: 2021/03/29 17:56:19 by alabalet         ###   ########.fr       */
+/*   Updated: 2021/03/29 18:34:40 by alabalet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,4 +77,8 @@ void		ft_check_map(t_cub *c);
 void		ft_config_init(t_cub *config);
 int			is_config_ready(t_cub *config);
 void		ft_parse_config_file(char *filename, t_cub *config);
+
+void		my_mlx_pixel_put(t_data *data, int x, int y, int color);
+void		ft_print_square(t_data *img);
+void		ft_print_rainbow(t_data *img);
 #endif
