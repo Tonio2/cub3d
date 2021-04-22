@@ -6,7 +6,7 @@
 /*   By: alabalet <alabalet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/29 18:17:07 by alabalet          #+#    #+#             */
-/*   Updated: 2021/03/30 10:26:53 by alabalet         ###   ########.fr       */
+/*   Updated: 2021/03/30 16:21:57 by alabalet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,29 +48,29 @@ void	ft_print_rectangle(t_data *img, int *x, int *y, int color)
 	}
 }
 
-void	ft_print_rainbow(t_data *img)
+void	ft_print_rainbow(t_data *img, int x_ini, int y_ini)
 {
 	int	x[2];
 	int	y[2];
 
-	x[0] = 1;
-	x[1] = 1919;
-	y[0] = 50;
-	y[1] = 70;
+	x[0] = x_ini;
+	x[1] = x_ini + 180;
+	y[0] = y_ini;
+	y[1] = y_ini + 20;
 	ft_print_rectangle(img, x, y, 0x00FF0000);
-	y[0] = 70;
-	y[1] = 90;
+	y[0] = y_ini + 20;
+	y[1] = y_ini + 40;
 	ft_print_rectangle(img, x, y, 0x00FFA500);
-	y[0] = 90;
-	y[1] = 110;
+	y[0] = y_ini + 40;
+	y[1] = y_ini + 60;
 	ft_print_rectangle(img, x, y, 0x00FFFF00);
-	y[0] = 110;
-	y[1] = 130;
+	y[0] = y_ini + 60;
+	y[1] = y_ini + 80;
 	ft_print_rectangle(img, x, y, 0x0000FF00);
-	y[0] = 130;
-	y[1] = 150;
+	y[0] = y_ini + 80;
+	y[1] = y_ini + 100;
 	ft_print_rectangle(img, x, y, 0x000000FF);
-	y[0] = 150;
-	y[1] = 170;
+	y[0] = y_ini + 100;
+	y[1] = y_ini + 120;
 	ft_print_rectangle(img, x, y, 0x00A500FF);
 }

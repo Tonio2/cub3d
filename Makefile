@@ -8,7 +8,8 @@ SRCS	=	main.c \
 			get_next_line.c \
 			utils.c \
 			check_config.c \
-			print_funny.c
+			print_funny.c \
+			funny_hook.c
 
 OBJS	=	$(SRCS:.c=.o)
 

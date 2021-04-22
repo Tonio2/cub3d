@@ -6,7 +6,7 @@
 /*   By: alabalet <alabalet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 14:27:13 by alabalet          #+#    #+#             */
-/*   Updated: 2021/03/29 18:34:40 by alabalet         ###   ########.fr       */
+/*   Updated: 2021/04/22 17:41:04 by alabalet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <fcntl.h>
 # include <errno.h>
 # include <string.h>
+# include <mlx.h>
 
 typedef struct s_cub
 {
@@ -48,6 +49,20 @@ typedef struct s_data {
 	int		line_length;
 	int		endian;
 }			t_data;
+
+typedef struct s_coor {
+	int	x;
+	int	y;
+	int	speed_x;
+	int	speed_y;
+}			t_coor;
+
+typedef struct s_vars {
+	void		*mlx;
+	void		*win;
+	t_data		img;
+	t_coor		c;
+}				t_vars;
 
 char		*ft_strcreate(char *str);
 int			ft_strncmp(const char *s1, const char *s2, unsigned int n);
@@ -80,5 +95,13 @@ void		ft_parse_config_file(char *filename, t_cub *config);
 
 void		my_mlx_pixel_put(t_data *data, int x, int y, int color);
 void		ft_print_square(t_data *img);
-void		ft_print_rainbow(t_data *img);
+void		ft_print_rainbow(t_data *img, int x_ini, int y_ini);
+
+int			key_hook(int keycode, t_vars *vars);
+int			mouse_hook(void);
+int			esc_close_window(int keycode, t_vars *vars);
+int			ft_close(int keycode, t_vars *vars);
+int			ft_update(t_vars *vars);
+int			press_hook(int keycode, t_vars *vars);
+int			release_hook(int keycode, t_vars *vars);
 #endif
