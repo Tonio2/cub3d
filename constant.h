@@ -6,7 +6,7 @@
 /*   By: alabalet <alabalet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 14:27:13 by alabalet          #+#    #+#             */
-/*   Updated: 2021/04/22 17:41:04 by alabalet         ###   ########.fr       */
+/*   Updated: 2021/04/22 17:53:32 by alabalet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ typedef struct s_cub
 	int		width;
 	char	**map;
 	char	orientation_init;
+	int		pos_x;
+	int		pos_y;
 }			t_cub;
 
 typedef struct s_map_line

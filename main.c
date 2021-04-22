@@ -6,7 +6,7 @@
 /*   By: alabalet <alabalet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/24 15:34:23 by alabalet          #+#    #+#             */
-/*   Updated: 2021/04/22 17:26:51 by alabalet         ###   ########.fr       */
+/*   Updated: 2021/04/22 17:49:55 by alabalet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void	ft_print_cub(t_cub c)
 	printf("F %d,%d,%d\n", c.bg[1][0], c.bg[1][1], c.bg[1][2]);
 	printf("map height : %d\n", c.height);
 	printf("map width : %d\n", c.width);
+	printf("orientation initial : %c\n", c.orientation_init);
 	while (++row < c.height)
 	{
 		column = -1;
@@ -40,7 +41,10 @@ void	ft_print_cub(t_cub c)
 int	main(void)
 {
 	t_vars	vars;
+	t_cub	config;
 
+	ft_parse_config_file("config_dir/lodev.cub", &config);
+	ft_print_cub(config);
 	vars.mlx = mlx_init();
 	vars.win = mlx_new_window(vars.mlx, 640, 480, "Hello world!");
 	vars.img.img = mlx_new_image(vars.mlx, 640, 480);
