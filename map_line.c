@@ -6,7 +6,7 @@
 /*   By: alabalet <alabalet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 18:29:58 by alabalet          #+#    #+#             */
-/*   Updated: 2021/04/22 17:55:19 by alabalet         ###   ########.fr       */
+/*   Updated: 2021/04/22 18:50:35 by alabalet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	ft_convert_map_char(char c, t_cub *config, int row, int column)
 	else if (ft_in(c, "WNES"))
 	{
 		config->map[row][column] = ' ';
-		config->orientation_init = c;
+		config->o_init = c;
 		config->pos_x = column;
 		config->pos_y = row;
 		if (orientation_received)

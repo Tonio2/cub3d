@@ -6,7 +6,7 @@
 /*   By: alabalet <alabalet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/29 18:17:07 by alabalet          #+#    #+#             */
-/*   Updated: 2021/03/30 16:21:57 by alabalet         ###   ########.fr       */
+/*   Updated: 2021/04/23 14:41:10 by alabalet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,24 @@ void	ft_print_rectangle(t_data *img, int *x, int *y, int color)
 		column = x[0] - 1;
 		while (++column < x[1])
 			my_mlx_pixel_put(img, column, row, color);
+	}
+}
+
+void	ft_verline(t_data *img, int x, int drawStart, int drawEnd, int side)
+{
+	int	y;
+	int	color1;
+	int	color2;
+
+	color1 = 0x00FF00;
+	color2 = 0xFF0000;
+	y = drawStart -1;
+	while (++y < drawEnd)
+	{
+		if (side)
+			my_mlx_pixel_put(img, x, y, color1);
+		else
+			my_mlx_pixel_put(img, x, y, color2);
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: alabalet <alabalet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 14:27:13 by alabalet          #+#    #+#             */
-/*   Updated: 2021/04/22 17:53:32 by alabalet         ###   ########.fr       */
+/*   Updated: 2021/04/23 18:16:00 by alabalet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <errno.h>
 # include <string.h>
 # include <mlx.h>
+# include <math.h>
 
 typedef struct s_cub
 {
@@ -33,7 +34,7 @@ typedef struct s_cub
 	int		height;
 	int		width;
 	char	**map;
-	char	orientation_init;
+	char	o_init;
 	int		pos_x;
 	int		pos_y;
 }			t_cub;
@@ -59,11 +60,21 @@ typedef struct s_coor {
 	int	speed_y;
 }			t_coor;
 
+typedef struct s_vector {
+	double	x;
+	double	y;
+}			t_vector;
+
 typedef struct s_vars {
 	void		*mlx;
 	void		*win;
 	t_data		img;
-	t_coor		c;
+	t_vector	pos;
+	t_vector	dir;
+	t_vector	plane;
+	double		time;
+	double		oldTime;
+	t_cub		config;
 }				t_vars;
 
 char		*ft_strcreate(char *str);
@@ -98,6 +109,7 @@ void		ft_parse_config_file(char *filename, t_cub *config);
 void		my_mlx_pixel_put(t_data *data, int x, int y, int color);
 void		ft_print_square(t_data *img);
 void		ft_print_rainbow(t_data *img, int x_ini, int y_ini);
+void		ft_verline(t_data *img, int x, int drawStart, int drawEnd, int side);
 
 int			key_hook(int keycode, t_vars *vars);
 int			mouse_hook(void);
