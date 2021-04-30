@@ -6,171 +6,169 @@
 /*   By: alabalet <alabalet@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 11:11:46 by alabalet          #+#    #+#             */
-/*   Updated: 2021/04/23 18:49:27 by alabalet         ###   ########.fr       */
+/*   Updated: 2021/04/29 14:45:26 by alabalet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "constant.h"
 
-int	esc_close_window(int keycode, t_vars *vars)
-{
-	if (keycode == 53)
-		mlx_destroy_window(vars->mlx, vars->win);
-	return (0);
-}
-
-int	ft_close(int keycode, t_vars *vars)
-{
-	keycode++;
-	mlx_destroy_window(vars->mlx, vars->win);
-	return (0);
-}
-
-int	mouse_hook(void)
-{
-	printf("Yo!\n");
-	return (0);
-}
-
 int	press_hook(int keycode, t_vars *vars)
 {
-	double	moveSpeed;
-	double	rotSpeed;
+	double	speed;
+	double	vRot;
 	double	oldDirX;
 	double	oldPlaneX;
 
-	moveSpeed = 0.1;
-	rotSpeed = 0.1;
+	speed = 0.1;
+	vRot = 0.1;
 	if (keycode == 123)
 	{
 		oldDirX = vars->dir.x;
-		vars->dir.x = vars->dir.x * cos(-rotSpeed) - vars->dir.y * sin(-rotSpeed);
-		vars->dir.y = oldDirX * sin(-rotSpeed) + vars->dir.y * cos(-rotSpeed);
+		vars->dir.x = vars->dir.x * cos(-vRot) - vars->dir.y * sin(-vRot);
+		vars->dir.y = oldDirX * sin(-vRot) + vars->dir.y * cos(-vRot);
 		oldPlaneX = vars->plane.x;
-		vars->plane.x = vars->plane.x * cos(-rotSpeed) - vars->plane.y * sin(-rotSpeed);
-		vars->plane.y = oldPlaneX * sin(-rotSpeed) + vars->plane.y * cos(-rotSpeed);
+		vars->plane.x = vars->plane.x * cos(-vRot) - vars->plane.y * sin(-vRot);
+		vars->plane.y = oldPlaneX * sin(-vRot) + vars->plane.y * cos(-vRot);
 	}
 	if (keycode == 124)
 	{
 		oldDirX = vars->dir.x;
-		vars->dir.x = vars->dir.x * cos(rotSpeed) - vars->dir.y * sin(rotSpeed);
-		vars->dir.y = oldDirX * sin(rotSpeed) + vars->dir.y * cos(rotSpeed);
+		vars->dir.x = vars->dir.x * cos(vRot) - vars->dir.y * sin(vRot);
+		vars->dir.y = oldDirX * sin(vRot) + vars->dir.y * cos(vRot);
 		oldPlaneX = vars->plane.x;
-		vars->plane.x = vars->plane.x * cos(rotSpeed) - vars->plane.y * sin(rotSpeed);
-		vars->plane.y = oldPlaneX * sin(rotSpeed) + vars->plane.y * cos(rotSpeed);
+		vars->plane.x = vars->plane.x * cos(vRot) - vars->plane.y * sin(vRot);
+		vars->plane.y = oldPlaneX * sin(vRot) + vars->plane.y * cos(vRot);
 	}
 	if (keycode == 125)
 	{
-		if (vars->config.map[(int)(vars->pos.y)][(int)(vars->pos.x - vars->dir.x * moveSpeed)] != '1')
-			vars->pos.x -= vars->dir.x * moveSpeed;
-		if (vars->config.map[(int)(vars->pos.y - vars->dir.y * moveSpeed)][(int)(vars->pos.x)] != '1')
-			vars->pos.y -= vars->dir.y * moveSpeed;
+		if (vars->config.map[(int)(vars->pos.y)]
+				[(int)(vars->pos.x - vars->dir.x * speed)] != '1')
+			vars->pos.x -= vars->dir.x * speed;
+		if (vars->config.map[(int)(vars->pos.y - vars->dir.y * speed)]
+				[(int)(vars->pos.x)] != '1')
+			vars->pos.y -= vars->dir.y * speed;
 	}
 	if (keycode == 126)
 	{
-		if (vars->config.map[(int)(vars->pos.y)][(int)(vars->pos.x + vars->dir.x * moveSpeed)] != '1')
-			vars->pos.x += vars->dir.x * moveSpeed;
-		if (vars->config.map[(int)(vars->pos.y + vars->dir.y * moveSpeed)][(int)(vars->pos.x)] != '1')
-			vars->pos.y += vars->dir.y * moveSpeed;
+		if (vars->config.map[(int)(vars->pos.y)]
+				[(int)(vars->pos.x + vars->dir.x * speed)] != '1')
+			vars->pos.x += vars->dir.x * speed;
+		if (vars->config.map[(int)(vars->pos.y + vars->dir.y * speed)]
+				[(int)(vars->pos.x)] != '1')
+			vars->pos.y += vars->dir.y * speed;
 	}
 	return (0);
 }
 
+void	ft_init_dda(t_vars *vars, int x, t_DDA *dda)
+{
+	dda->cameraX = 2 * x / (double)vars->config.dim_y - 1;
+	dda->rayDirX = vars->dir.x + vars->plane.x * dda->cameraX;
+	dda->rayDirY = vars->dir.y + vars->plane.y * dda->cameraX;
+	dda->mapX = (int)(vars->pos.x);
+	dda->mapY = (int)(vars->pos.y);
+	dda->deltaDistX = fabs(1 / dda->rayDirX);
+	dda->deltaDistY = fabs(1 / dda->rayDirY);
+	dda->hit = 0;
+}
+
+void	ft_dda(t_vars *vars, t_DDA *dda)
+{
+	dda->stepX = (dda->rayDirX >= 0) - (dda->rayDirX < 0);
+	dda->stepY = (dda->rayDirY >= 0) - (dda->rayDirY < 0);
+	if (dda->rayDirX < 0)
+		dda->sideDistX = (vars->pos.x - dda->mapX) * dda->deltaDistX;
+	else
+		dda->sideDistX = (dda->mapX + 1.0 - vars->pos.x) * dda->deltaDistX;
+	if (dda->rayDirY < 0)
+		dda->sideDistY = (vars->pos.y - dda->mapY) * dda->deltaDistY;
+	else
+		dda->sideDistY = (dda->mapY + 1.0 - vars->pos.y) * dda->deltaDistY;
+	while (dda->hit == 0)
+	{
+		dda->side = (dda->sideDistX >= dda->sideDistY);
+		if (dda->sideDistX < dda->sideDistY)
+		{
+			dda->sideDistX += dda->deltaDistX;
+			dda->mapX += dda->stepX;
+		}
+		else
+		{
+			dda->sideDistY += dda->deltaDistY;
+			dda->mapY += dda->stepY;
+		}
+		dda->hit = (vars->config.map[dda->mapY][dda->mapX] == '1');
+	}
+}
+
+void	ft_dda_lineheight(t_vars *vars, t_DDA *dda)
+{
+	if (dda->side == 0)
+		dda->perpWallDist = (dda->mapX - vars->pos.x
+				+ (1 - dda->stepX) / 2) / dda->rayDirX;
+	else
+		dda->perpWallDist = (dda->mapY - vars->pos.y
+				+ (1 - dda->stepY) / 2) / dda->rayDirY;
+	dda->lineHeight = (vars->config.dim_y
+			/ (2 * dda->perpWallDist * tan(M_PI / 6))) * 0.88;
+	dda->draw.drawStart = (int)(-dda->lineHeight / 2 + vars->config.dim_x / 2);
+	if (dda->draw.drawStart < 0)
+		dda->draw.drawStart = 0;
+	dda->draw.drawEnd = (int)(dda->lineHeight / 2 + vars->config.dim_x / 2);
+	if (dda->draw.drawEnd >= vars->config.dim_x)
+		dda->draw.drawEnd = vars->config.dim_x - 1;
+}
+
+void	ft_draw_line(t_vars *vars, int x, t_DDA *dda)
+{
+	if (dda->side == 0)
+	{
+		dda->wallX = vars->pos.y + dda->perpWallDist * dda->rayDirY;
+		dda->textype = (dda->rayDirX > 0) * 3 + (dda->rayDirX < 0) * 2;
+	}
+	else
+	{
+		dda->wallX = vars->pos.x + dda->perpWallDist * dda->rayDirX;
+		dda->textype = (dda->rayDirY > 0) * 1 + (dda->rayDirY < 0) * 0;
+	}
+	dda->wallX -= floor((dda->wallX));
+	dda->texX = (int)(dda->wallX * (double)(64));
+	if (dda->side == 0 && dda->rayDirX > 0)
+		dda->texX = 64 - dda->texX - 1;
+	if (dda->side == 1 && dda->rayDirY < 0)
+		dda->texX = 64 - dda->texX - 1;
+	dda->step = 64.0 / dda->lineHeight;
+	dda->texPos = (dda->draw.drawStart - vars->config.dim_x / 2
+			+ dda->lineHeight / 2) * dda->step;
+	dda->y = dda->draw.drawStart - 1;
+	while (++dda->y < dda->draw.drawEnd)
+	{
+		dda->texY = (int)dda->texPos;
+		dda->texPos += dda->step;
+		dda->color = ft_get_color(&vars->teximg[dda->textype], dda->texX, dda->texY);
+		my_mlx_pixel_put(&vars->img, x, dda->y, dda->color);
+	}
+}
+
 int	ft_update(t_vars *vars)
 {
-	int		x;
-	double	cameraX;
-	double	rayDirX;
-	double	rayDirY;
-	int		mapX;
-	int		mapY;
-	double	sideDistX;
-	double	sideDistY;
-	double	deltaDistX;
-	double	deltaDistY;
-	double	perpWallDist;
-	int		stepX;
-	int		stepY;
-	int		hit;
-	int		side;
-	int		lineHeight;
-	int		drawStart;
-	int		drawEnd;
-	double	h;
-	int		y;
+	int				x;
+	t_DDA			dda;
 
-	h = 480.0;
 	x = -1;
-	while (++x < 640)
+	while (++x < vars->config.dim_y)
 	{
-		y = -1;
-		while (++y < 480)
-			my_mlx_pixel_put(&vars->img, x, y, 0x00000000);
+		dda.draw.drawStart = 0;
+		dda.draw.drawEnd = vars->config.dim_x - 1;
+		ft_verline(&vars->img, x, dda.draw, 0x000000);
 	}
 	x = -1;
-	while (++x < 640)
+	while (++x < vars->config.dim_y)
 	{
-		cameraX = 2 * x / 640.0 - 1;
-		rayDirX = vars->dir.x + vars->plane.x * cameraX;
-		rayDirY = vars->dir.y + vars->plane.y * cameraX;
-		mapX = (int)(vars->pos.x);
-		mapY = (int)(vars->pos.y);
-		deltaDistX = (1 / rayDirX);
-		deltaDistY = (1 / rayDirY);
-		if (deltaDistX < 0)
-			deltaDistX *= -1;
-		if (deltaDistY < 0)
-			deltaDistY *= -1;
-		hit = 0;
-		if (rayDirX < 0)
-		{
-			stepX = -1;
-			sideDistX = (vars->pos.x - mapX) * deltaDistX;
-		}
-		else
-		{
-			stepX = 1;
-			sideDistX = (mapX + 1.0 - vars->pos.x) * deltaDistX;
-		}
-		if (rayDirY < 0)
-		{
-			stepY = -1;
-			sideDistY = (vars->pos.y - mapY) * deltaDistY;
-		}
-		else
-		{
-			stepY = 1;
-			sideDistY = (mapY + 1.0 - vars->pos.y) * deltaDistY;
-		}
-		while (hit == 0)
-		{
-			if (sideDistX < sideDistY)
-			{
-				sideDistX += deltaDistX;
-				mapX += stepX;
-				side = 0;
-			}
-			else
-			{
-				sideDistY += deltaDistY;
-				mapY += stepY;
-				side = 1;
-			}
-			if (vars->config.map[mapY][mapX] == '1')
-				hit = 1;
-		}
-		if (side == 0)
-			perpWallDist = (mapX - vars->pos.x + (1 - stepX) / 2) / rayDirX;
-		else
-			perpWallDist = (mapY - vars->pos.y + (1 - stepY) / 2) / rayDirY;
-		lineHeight = (int)(h / perpWallDist);
-		drawStart = -lineHeight / 2 + h / 2;
-		if (drawStart < 0)
-			drawStart = 0;
-		drawEnd = lineHeight / 2 + h / 2;
-		if (drawEnd >= h)
-			drawEnd = h - 1;
-		ft_verline(&vars->img, x, drawStart, drawEnd, side);
+		ft_init_dda(vars, x, &dda);
+		ft_dda(vars, &dda);
+		ft_dda_lineheight(vars, &dda);
+		ft_draw_line(vars, x, &dda);
 	}
 	mlx_put_image_to_window(vars->mlx, vars->win, vars->img.img, 0, 0);
 	return (0);
